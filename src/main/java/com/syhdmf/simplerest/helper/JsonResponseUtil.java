@@ -10,7 +10,7 @@ import com.syhdmf.simplerest.dto.response.BaseResponse;
 
 public class JsonResponseUtil {
 
-	public static <T> ResponseEntity<BaseResponse<T>> success(BaseResponse<T> baseResponse) {
+	public static <T> ResponseEntity<BaseResponse<T>> bsuccess(BaseResponse<T> baseResponse) {
 		baseResponse.setStatus(200);
 		baseResponse.setError("OK");
 		return ResponseEntity.status(HttpStatus.OK).body(baseResponse);
@@ -19,17 +19,17 @@ public class JsonResponseUtil {
 	public static <T> ResponseEntity<BaseResponse<T>> success(T data) {
 		BaseResponse<T> baseResponse = new BaseResponse<>();
 		baseResponse.setData(data);
-		return success(baseResponse);
+		return bsuccess(baseResponse);
 	}
 	
 	public static <T> ResponseEntity<BaseResponse<T>> success(T data, String message) {
 		BaseResponse<T> baseResponse = new BaseResponse<>();
 		baseResponse.setData(data);
 		baseResponse.setMessage(message);
-		return success(baseResponse);
+		return bsuccess(baseResponse);
 	}
 	
-	public static <T> ResponseEntity<BaseResponse<T>> error(BaseResponse<T> baseResponse) {
+	public static <T> ResponseEntity<BaseResponse<T>> berror(BaseResponse<T> baseResponse) {
 		baseResponse.setStatus(400);
 		baseResponse.setError("Bad Request");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(baseResponse);
@@ -38,14 +38,14 @@ public class JsonResponseUtil {
 	public static <T> ResponseEntity<BaseResponse<T>> error(T data) {
 		BaseResponse<T> baseResponse = new BaseResponse<>();
 		baseResponse.setData(data);
-		return error(baseResponse);
+		return berror(baseResponse);
 	}
 	
 	public static <T> ResponseEntity<BaseResponse<T>> error(T data, String message) {
 		BaseResponse<T> baseResponse = new BaseResponse<>();
 		baseResponse.setData(data);
 		baseResponse.setMessage(message);
-		return error(baseResponse);
+		return berror(baseResponse);
 	}
 	
 	public static <T> ResponseEntity<BaseResponse<T>> error(List<FieldError> errors) {
@@ -55,10 +55,10 @@ public class JsonResponseUtil {
 			message += row.getField() + " " + row.getDefaultMessage() + ". ";
 		}
 		baseResponse.setMessage(message);
-		return error(baseResponse);
+		return berror(baseResponse);
 	}
 	
-	public static <T> ResponseEntity<BaseResponse<T>> base(BaseResponse<T> baseResponse) {
+	public static <T> ResponseEntity<BaseResponse<T>> bbase(BaseResponse<T> baseResponse) {
 		baseResponse.setError((baseResponse.getStatus() >= 200 && baseResponse.getStatus() < 300 ? "OK" : "Something Wrong"));
 		return ResponseEntity.status(HttpStatus.valueOf(baseResponse.getStatus())).body(baseResponse);
 	}
@@ -67,6 +67,6 @@ public class JsonResponseUtil {
 		BaseResponse<T> baseResponse = new BaseResponse<>();
 		baseResponse.setStatus(status);
 		baseResponse.setMessage(message);
-		return base(baseResponse);
+		return bbase(baseResponse);
 	}
 }

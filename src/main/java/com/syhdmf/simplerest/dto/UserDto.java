@@ -1,9 +1,9 @@
 package com.syhdmf.simplerest.dto;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,30 +19,24 @@ import lombok.ToString;
 public class UserDto {
 	
 	@NotNull
-	@Min(value = 8)
-	@Max(value = 50)
+	@Length(min = 8, max = 50)
 	private String username;
 	
 	@NotNull
 	@Email
-	@Max(value = 75)
+	@Length(max = 75)
 	private String email;
-	
-	@Min(value = 8)
-	@Max(value = 20)
+
+	@Length(min = 7, max = 20)
 	private String password;
 	
-	@Min(value = 8)
-	@Max(value = 20)
+	@Length(min = 7, max = 20)
 	private String password2;
 	
 	@NotNull
-	@Min(value = 8)
-	@Max(value = 50)
+	@Length(min = 1, max = 50)
 	private String firstName;
 	
-	@NotNull
-	@Min(value = 8)
-	@Max(value = 50)
+	@Length(max = 50)
 	private String lastName;
 }

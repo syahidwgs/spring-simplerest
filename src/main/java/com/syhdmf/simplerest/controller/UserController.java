@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class UserController {
 	UserService service;
 	
 	@PostMapping
-	public ResponseEntity<BaseResponse<Object>> save(@Valid UserDto request, BindingResult result) {
+	public ResponseEntity<BaseResponse<Object>> save(@Valid @RequestBody UserDto request, BindingResult result) {
 		if (result.hasErrors()) {
 			return JsonResponseUtil.error(result.getFieldErrors());
 		}
@@ -59,7 +60,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<BaseResponse<Object>> update(@PathVariable Long id, UserDto request) {
+	public ResponseEntity<BaseResponse<Object>> update(@PathVariable Long id, @Valid @RequestBody UserDto request, BindingResult result) {
 		try {
 			service.update(id, request);
 		} catch (Exception e) {
