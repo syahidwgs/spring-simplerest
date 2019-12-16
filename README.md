@@ -3,6 +3,12 @@
 - Login Oauth
 - CRUD User
 
-Login
-u: syahidmf
-p: test1234
+---------------
+
+POST: /oauth/token
+
+Basic Auth, username: simplerest, password: secret
+
+Header, Content-Type: application/x-www-form-urlencoded 
+
+Body, username: syahidmf, password: test1234, grant_type: password
