@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.syhdmf.simplerest.model.UserModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,4 +41,15 @@ public class UserDto {
 	
 	@Length(max = 50)
 	private String lastName;
+	
+	public UserDto(UserModel entity) {
+		setFromModel(entity);
+	}
+	
+	public void setFromModel(UserModel entity) {
+		this.username = entity.getUsername();
+		this.email = entity.getEmail();
+		this.firstName = entity.getFirstName();
+		this.lastName = entity.getLastName();
+	}
 }

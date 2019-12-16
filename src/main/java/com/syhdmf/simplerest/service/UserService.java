@@ -9,7 +9,7 @@ public interface UserService {
 
 	public void save(UserDto request) throws Exception;
 	
-	public Page<UserModel> findAll(int page, int limit);
+	public Page<UserModel> findAll(int page, int limit, String q);
 	
 	public UserModel findById(Long id);
 	

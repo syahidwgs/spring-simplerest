@@ -2,6 +2,9 @@ package com.syhdmf.simplerest.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +18,6 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	UserModel findLogin(String username);
 	
 	List<UserModel> findByUsernameOrEmail(String username, String email);
+
+	Page<UserModel> findAll(Specification<UserModel> spec, Pageable pageable);
 }

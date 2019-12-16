@@ -44,8 +44,8 @@ public class UserController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<BaseResponse<Page<UserModel>>> list(@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "10") int limit) {	
-		Page<UserModel> data = service.findAll(page, limit);
+		@RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "") String q) {	
+		Page<UserModel> data = service.findAll(page, limit, q);
 		return JsonResponseUtil.success(data);
 	}
 	

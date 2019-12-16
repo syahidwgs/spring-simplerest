@@ -2,10 +2,13 @@ package com.syhdmf.simplerest.service.impl;
 
 import java.util.List;
 
+import javax.persistence.criteria.Predicate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,9 +63,27 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	public Page<UserModel> findAll(int page, int limit) {
+	public Page<UserModel> findAll(int page, int limit, String q) {
+		Specification<UserModel> spec = null;
+		if (!q.equals("")) {
+			spec = filter(q);
+		}
 		Pageable pageable = PageRequest.of(page - 1, limit);
-		return repo.findAll(pageable);
+		return repo.findAll(spec, pageable);
+	}
+	
+	private Specification<UserModel> filter(String q) {
+		return (root, query, cb) ->{
+			Predicate whereFinal = null;
+			String qword = "%" + q + "%";
+			Predicate where1 = cb.like(root.<String> get("username"), qword);
+			Predicate where2 = cb.like(root.<String> get("email"), qword);
+			Predicate where3 = cb.like(root.<String> get("firstName"), qword);
+			Predicate where4 = cb.like(root.<String> get("lastName"), qword);
+			
+			whereFinal = cb.or(where1, where2, where3, where4);
+			return whereFinal;
+		};
 	}
 
 	public UserModel findById(Long id) {
